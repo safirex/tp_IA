@@ -1,7 +1,8 @@
 class Character:
     def __init__(self,arr):
         (self.name,self.firstName,self.age,self.profession,self.morale_value) = arr
-
+        self.morale_value = float(self.morale_value)
+        
     def setArmy(self,army):
         self.army=army
 

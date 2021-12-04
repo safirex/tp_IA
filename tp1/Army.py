@@ -9,9 +9,3 @@ class Army:
     
     def get_Total_Moral(self) -> float:
         return self.moralValue*self.moralBoost
-
-def get_sum_moral(arr) -> float:
-    sum=0
-    for i in arr:
-        if(type(i)==Army):
-            sum+=i.get_Total_Moral()
