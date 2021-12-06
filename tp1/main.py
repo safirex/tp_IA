@@ -1,16 +1,20 @@
-import Character as ch
-import Army as arm
 import numpy as np
 import pandas as pd
 import random as rd
 import math
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+import Character as ch
+import Army as arm
+import Perceptron as perc
+
 
 CSVPATH ="characters.csv"
 rd.seed(15)
 
 
 def main():
-
 
     data = pd.read_csv(CSVPATH, header=None)
     characters = []
@@ -59,7 +63,20 @@ def main():
     print(error_value)
 
 
+    #fig = plt.figure(figsize=(4,4))
+    #ax = fig.add_subplot(111, projection='3d')
+    #plt.show()
+
+
+def main2():
+    
+    input_choice = np.array([[0,0],[0,1],[1,0],[1,1]])
+    expected_output = np.array([0,0,0,1])
+
+
+    perceptron = perc.Perceptron(2,2000,0.2)
+    perceptron.train(input_choice,expected_output)
     
 if __name__ == '__main__':
-    main()
+    main2()
     
