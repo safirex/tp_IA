@@ -68,6 +68,10 @@ def main():
     #plt.show()
 
 
+
+
+
+
 def main2():
     
     input_choice = np.array([[0,0],[0,1],[1,0],[1,1]])
@@ -76,7 +80,10 @@ def main2():
 
     perceptron = perc.Perceptron(2,2000,0.2)
     perceptron.train(input_choice,expected_output)
+
+    print("prediction")
+    print("err = "+str(perceptron.predict([1,1])))
     
 if __name__ == '__main__':
-    main2()
+    main()
     

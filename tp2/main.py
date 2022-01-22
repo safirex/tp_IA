@@ -11,16 +11,14 @@ import matplotlib.pyplot as plt
 
 
 def readFromCsv(path):
-      
   import pandas as pd
-  from numpy import genfromtxt
 
+  #from numpy import genfromtxt
   #data = genfromtxt(fname = path)
-  data = pandas.read_csv(path).to_numpy()
 
-  return data
+  return pandas.read_csv(path).to_numpy()
 
-x = readFromCsv("input.csv")
+data = readFromCsv("input.csv")
 
 '''
 #inputs affichage 7 seg
@@ -38,17 +36,16 @@ x = np.array  ([[1,1,1,1,1,1,0], #0
                 ]) #tout à 1 = 8
 
 '''
-print(x.shape) #(9,7) 
-#x = np.reshape(x, (len(x), 1, 7)) #reshape pour keras delimite les listes
+
 
 # Teachers
 '''
 y = np.asarray([0,1,2,3,4,5,6,7,8,9]) # peut etre remplacé par itérateur du premier tab
 '''
 
-#extract teacher value
-y = x[:,-1]
-x = x[:,:-1]
+#extract values
+y = data[:,-1]  #output values
+x = data[:,:-1] #input values
 
 #on ignore 0 pour qulque raison que ce soit
 x= x[1:]
@@ -64,8 +61,8 @@ print(y.shape)
 
 
 
-#    Je prépare ma descente du gradient avec un learning rate à 0.1
-sgd = keras.optimizers.SGD(learning_rate=0.5)
+#    Je prépare ma descente du gradient avec un learning rate à 0.8
+sgd = keras.optimizers.SGD(learning_rate=0.8)
 
 #    Mon modèle est de type séquentiel. Cela veut dire que les couches (layers) du réseau de neurones se suivent les unes après les autres
 model = Sequential()
@@ -80,9 +77,10 @@ model.summary()
 #   Je compile le modèle avec la descente du gradient et une losse de type (t-y)² (celle vu en cours)
 model.compile(optimizer=sgd, loss='mean_squared_error')
 
-#   Je lance l'apprentissage du modèle sur 500 epochs
-callback = keras.callbacks.EarlyStopping(monitor='loss', patience=3, min_delta = 0.000001)
+#callback from fitness training for early stop
+callback = keras.callbacks.EarlyStopping(monitor='loss', patience=3, min_delta = 0.000005)
 
+#apprentissage sur 6k epochs
 history = model.fit(x, y, epochs=6000,
                     callbacks=[callback],)
 
